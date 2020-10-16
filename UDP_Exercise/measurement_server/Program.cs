@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using lib;
 
 namespace measurement_server
 {
@@ -12,46 +13,17 @@ namespace measurement_server
         static async Task Main(string[] args)
         {
             
+            Dictionary<string,string> commandAndFileDictionary = new Dictionary<string, string>();
+            //ADD COMMANDS AND FILE ASSOCIATIONS
+            commandAndFileDictionary.Add("L","testfile.txt");
 
-            Task serverTask = Task.Factory.StartNew(async () =>
-            {
-                var server = new Server(9000);
+            //Start server
+            var server = new ServerRuntime(9000, commandAndFileDictionary);
 
-                while (true)
-                {
-                    var received = await server.Receive();
-                    server.Send(new UDPMessage()
-                    {
-                        Address = received.Address,
-                        Message = "returning " + received.Message
-                    });
-                    if (received.Message.Contains("quit"))
-                    {
-                        break;
-                    }
-                }
-            });
-
-            
-
-            var client = new Client("127.0.0.1", 9000);
-
-            while (true)
-            {
-                Console.Write("Input message: ");
-                string message = Console.ReadLine();
-
-                client.Send(message);
-
-                UDPMessage returnMessage = await client.Receive();
-                Console.WriteLine("Received reply: \"{0}\", from address: {1}", returnMessage.Message, returnMessage.Address.Address.ToString());
-                if (message.Contains("quit"))
-                {
-                    break;
-                }
-            }
-
-            await serverTask;
+            //Break at command
+            Console.WriteLine("Input Q/q to quit...");
+            while (Console.ReadKey().Key != ConsoleKey.Q)
+            { }
         }
     }
 }

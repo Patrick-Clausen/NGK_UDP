@@ -5,13 +5,12 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using lib;
 
-namespace measurement_server
+namespace measurement_client
 { 
-    public class Client
+    public class Client : UDPCommunicator
     {
-        private UdpClient _socket;
-
         public Client(string address, int port)
         {
             _socket = new UdpClient();
@@ -22,16 +21,6 @@ namespace measurement_server
         {
             byte[] data = Encoding.UTF8.GetBytes(message);
             _socket.Send(data, data.Length);
-        }
-
-        public async Task<UDPMessage> Receive()
-        {
-            var result = await _socket.ReceiveAsync();
-            return new UDPMessage()
-            {
-                Message = Encoding.UTF8.GetString(result.Buffer, 0, result.Buffer.Length),
-                Address = result.RemoteEndPoint
-            };
         }
     }
 }

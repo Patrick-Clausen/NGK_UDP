@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{84449F62-FE99-4BD0-8370-2A84D6AE0471}</ProjectGuid>
+    <ProjectGuid>{2A18057F-A0C8-4534-9CE6-2355CF2F1C66}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>measurement_server</RootNamespace>
-    <AssemblyName>measurement_server</AssemblyName>
+    <RootNamespace>measurement_client</RootNamespace>
+    <AssemblyName>measurement_client</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,10 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Client.cs" />
+    <Compile Include="ClientRuntime.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Server.cs" />
-    <Compile Include="ServerRuntime.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
