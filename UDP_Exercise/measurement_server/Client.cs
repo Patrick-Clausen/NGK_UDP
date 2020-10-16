@@ -3,31 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace measurement_server
-{
-    public struct UDPMessage
-    {
-        public string Message;
-        public IPEndPoint Address;
-    }
-
-    public class Server
+{ 
+    public class Client
     {
         private UdpClient _socket;
 
-        public Server(int port)
+        public Client(string address, int port)
         {
-            _socket = new UdpClient(new IPEndPoint(IPAddress.Any, port));
+            _socket = new UdpClient();
+            _socket.Connect(new IPEndPoint(IPAddress.Parse(address), port));
         }
 
-        public void Send(UDPMessage message)
+        public void Send(string message)
         {
-            byte[] data = Encoding.UTF8.GetBytes(message.Message);
-            _socket.Send(data, data.Length, message.Address);
+            byte[] data = Encoding.UTF8.GetBytes(message);
+            _socket.Send(data, data.Length);
         }
 
         public async Task<UDPMessage> Receive()
